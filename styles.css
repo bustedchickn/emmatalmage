@@ -8,6 +8,7 @@ body {
 }
 
 /* Fade-in sequence */
+/* Fade-in animations */
 .fade-in {
   opacity: 0;
   transform: translateY(20px);
@@ -26,29 +27,7 @@ body {
   }
 }
 
-.video-container {
-  margin: 2em 0;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 0 20px rgba(255, 150, 180, 0.4);
-}
-
-.rings {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 1.5em;
-}
-.rings img {
-  width: 150px;
-  border-radius: 50%;
-  box-shadow: 0 0 10px rgba(255, 150, 180, 0.5);
-  transition: transform 0.3s ease;
-}
-.rings img:hover {
-  transform: scale(1.1);
-}
-
+/* Hearts appear after intro */
 .hearts {
   position: fixed;
   top: 0;
@@ -58,6 +37,12 @@ body {
   pointer-events: none;
   overflow: hidden;
   z-index: -1;
+  opacity: 0;
+  animation: heartsAppear 1s ease 3s forwards;
+}
+
+@keyframes heartsAppear {
+  to { opacity: 1; }
 }
 
 .hearts span {
@@ -68,7 +53,6 @@ body {
   opacity: 0.3;
 }
 
-/* Give each heart its own random path */
 .hearts span:nth-child(1) { left: 5%; animation-delay: 0s; animation-duration: 11s; font-size: 1.8rem; }
 .hearts span:nth-child(2) { left: 15%; animation-delay: 2s; animation-duration: 9s; font-size: 2rem; }
 .hearts span:nth-child(3) { left: 30%; animation-delay: 1s; animation-duration: 12s; }
@@ -79,25 +63,92 @@ body {
 .hearts span:nth-child(8) { left: 95%; animation-delay: 4s; animation-duration: 9s; }
 
 @keyframes floatUp {
-  0% {
-    transform: translateY(0) rotate(0deg);
-    opacity: 0.3;
-  }
-  25% {
-    transform: translateY(-25vh) rotate(15deg);
-    opacity: 0.6;
-  }
-  50% {
-    transform: translateY(-50vh) rotate(-10deg);
-    opacity: 0.4;
-  }
-  75% {
-    transform: translateY(-75vh) rotate(10deg);
-    opacity: 0.6;
-  }
-  100% {
-    transform: translateY(-100vh) rotate(-15deg);
-    opacity: 0;
+  0% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
+  25% { transform: translateY(-25vh) rotate(15deg); opacity: 0.6; }
+  50% { transform: translateY(-50vh) rotate(-10deg); opacity: 0.4; }
+  75% { transform: translateY(-75vh) rotate(10deg); opacity: 0.6; }
+  100% { transform: translateY(-100vh) rotate(-15deg); opacity: 0; }
+}
+
+/* Ring bag reveal */
+.ring-bag {
+  position: relative;
+  display: inline-block;
+  margin-top: 7em;
+}
+.bag-img {
+  width: 180px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(255, 150, 180, 0.5);
+}
+/* Rings appear floating out of the bag */
+.rings {
+  position: absolute;
+  bottom: 180px; /* raised higher above the bag mouth */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 20px;
+  opacity: 0;
+  animation: popOut 1.5s ease 4s forwards, floatRings 4s ease-in-out 6s infinite alternate;
+  z-index: 2; /* in front of the bag */
+}
+
+/* Floating animation */
+@keyframes floatRings {
+  0% { transform: translateX(-50%) translateY(-10px); }
+  100% { transform: translateX(-50%) translateY(-25px); }
+}
+
+.rings img {
+  width: 80px;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(255, 150, 180, 0.5);
+  transform: translateY(30px);
+  transition: transform 0.3s ease;
+}
+.rings img:hover {
+  transform: translateY(0) scale(1.1);
+}
+
+@keyframes popOut {
+  0% { opacity: 0; transform: translateX(-50%) translateY(30px); }
+  100% { opacity: 1; transform: translateX(-50%) translateY(-20px); }
+}
+/* Fade-in sequence (slower pacing) */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 1.6s ease forwards;
+}
+.delay-1 { animation-delay: 1.2s; }
+.delay-2 { animation-delay: 2.4s; }
+.delay-3 { animation-delay: 3.6s; }
+.delay-4 { animation-delay: 4.8s; }
+.delay-5 { animation-delay: 6s; }
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
+/* Hearts appear a bit later */
+.hearts {
+  animation: heartsAppear 1.2s ease 5s forwards;
+}
+
+/* Rings emerge more gracefully */
+.rings {
+  position: absolute;
+  bottom: 180px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 20px;
+  opacity: 0;
+  /* pop out starts later, float starts after */
+  animation: popOut 2s ease 6s forwards, floatRings 5s ease-in-out 8s infinite alternate;
+  z-index: 2;
+}
