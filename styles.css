@@ -7,13 +7,29 @@ body {
   overflow-x: hidden;
 }
 
-.video-container{
-  max-width: 80%;
-  margin-right: auto;
-  margin-left: auto;
+/* Responsive video container */
+.video-container {
+  position: relative;
+  width: 100%;
+  max-width: 700px; /* optional – limits how wide it can get */
+  margin: 0 auto; /* center it */
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  height: 0;
+  overflow: hidden;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(255, 150, 180, 0.4);
 }
 
-/* Fade-in sequence */
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 15px;
+}
+
 /* Fade-in animations */
 .fade-in {
   opacity: 0;
